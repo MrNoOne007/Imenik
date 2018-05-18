@@ -15,10 +15,10 @@ public class ConnectionManager {
 	private static final String USERNAME = "root";
 	private static final String PASSWORD = "1234";
 	// localhost//imeBazeNaKojuSeSpajamo
-	private static final String CONN_STRING = "jdbc:mysql://localhost:3306/Imenik?useSSL=false";
+	private static final String CONN_STRING = "jdbc:mysql://localhost:3306/Imenik?useSSL=false&serverTimezone=UTC";
 
 	// connection object
-	private Connection connection = null;
+	private Connection conn = null;
 
 	// privatni konstruktor - klasa moze biti instancirana samo unutar sebe
 	private ConnectionManager() {
@@ -35,7 +35,7 @@ public class ConnectionManager {
 
 	private boolean openConnection() {
 		try {
-			connection = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
+			conn = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
 			return true;
 		} catch (SQLException e) {
 			System.err.println(e);
@@ -44,22 +44,22 @@ public class ConnectionManager {
 	}
 
 	public Connection getConnection() {
-		if (connection == null) {
+		if (conn == null) {
 			if (openConnection()) {
 				System.out.println("Konekcija otvorena.");
-				return connection;
+				return conn;
 			} else {
 				return null;
 			}
 		}
-		return connection;
+		return conn;
 	}
 
 	public void close() {
 		System.out.println("Konekcija zatvorena.");
 		try {
-			connection.close();
-			connection = null;
+			conn.close();
+			conn= null;
 		} catch (Exception e) {
 		}
 	}

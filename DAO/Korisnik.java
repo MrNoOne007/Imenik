@@ -2,6 +2,7 @@ package DAO;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 import java.sql.PreparedStatement;
 
@@ -15,7 +16,7 @@ public class Korisnik implements KorisnikDAOInterface {
 	@Override
 	public void addUser() throws SQLException {
 		// Sql query
-		String query = "Insert into User(username,password)values(?,?)";
+		String query = "Insert into User (username,password) values(?,?)";
 
 		// Input
 		Scanner input = new Scanner(System.in);
@@ -26,19 +27,21 @@ public class Korisnik implements KorisnikDAOInterface {
 		input.close();
 		try (
 				// java sql statement
-			PreparedStatement Statement = (PreparedStatement) connection.prepareStatement(query);) {
-			Statement.setString(1, username);
-			Statement.setString(2, password);
-			Statement.executeUpdate();
+			PreparedStatement statement = (PreparedStatement) connection.prepareStatement(query);) {
+		
+			statement.setString(1, username);
+			statement.setString(2, password);
+			statement.executeUpdate();
 			System.out.println("User added to database!");
 		}
 
 	}
+	
 	@Override
 	public String getUser(String username) throws SQLException {
 
 		// null student
-		Korisnici korisnik = null;
+		Korisnici User = null;
 		String ime = "";
 		String pass = "";
 
